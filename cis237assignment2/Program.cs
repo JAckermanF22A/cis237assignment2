@@ -27,42 +27,43 @@ namespace cis237assignment2
             /// Note: You may want to make a smaller version to test and debug with.
             /// You don't have to, but it might make your life easier.
             /// </summary>
-            /*char[,] maze1 = 
+            char[,] maze1 = 
             { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
             { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
             { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
             { '#', '#', '#', '.', '#', '.', '.', '.', '.', '#', '.', '#' },
-            { '#', '.', '.', '.', '.', '#', '#', '#', '.', '#', '.', '.' },
+            { '#', '.', '.', '.', '.', '#', '#', '#', '.', '#', '.', 'F' },
             { '#', '#', '#', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
             { '#', '.', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
             { '#', '#', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
             { '#', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '#' },
             { '#', '#', '#', '#', '#', '#', '.', '#', '#', '#', '.', '#' },
             { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
-            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };*/
+            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
 
-            char[,] maze1 =
+            /*char[,] maze1 =
             { {'#', '#', '#', '#', '#'},
             {'#', '.', '.', '.', '#'},
             {'#', '#', '.', '#', '#'},
-            {'#', '.', '.', '.', '.'},
-            {'#', '#', '#', '#', '#'} };
+            {'#', '.', '.', '.', 'F'},
+            {'#', '#', '#', '#', '#'} };*/
 
             /// <summary>
             /// Create a new instance of a mazeSolver.
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
 
+            //Create the second maze by transposing the first maze
+            char[,] maze2 = transposeMaze(maze1);
+
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
-
-            //Create the second maze by transposing the first maze
-            char[,] maze2 = transposeMaze(maze1);
+            
 
             //Solve the transposed maze.
-            mazeSolver.SolveMaze(maze2, X_START, Y_START);
+            //mazeSolver.SolveMaze(maze2, X_START, Y_START); //UNCOMMENT OUT TO SOLVE MAZE 2
 
         }
 
@@ -85,7 +86,27 @@ namespace cis237assignment2
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
             //Write code her to create a transposed maze.
+            for (int j = 0; j < 8; j++)
+                for (int r = 0; r < 5; r++)
+                    maze2[j, r] = mazeToTranspose[r, j];
             return new char[1, 1];
+        }
+
+        public void PrintMaze(char[,] maze)
+        {
+            char[,] solvedMaze;
+            solvedMaze = maze;
+            int rowLength = solvedMaze.GetLength(0);
+            int colLength = solvedMaze.GetLength(1);
+
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    Console.Write(string.Format("{0} ", solvedMaze[i, j]));
+                }
+                Console.Write(Environment.NewLine + Environment.NewLine);
+            }
         }
     }
 }

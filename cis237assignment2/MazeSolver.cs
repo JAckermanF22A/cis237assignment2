@@ -20,6 +20,10 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
+        bool finishBool;
+        bool deadEndBool;
+
+        Program program = new Program();
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -42,6 +46,7 @@ namespace cis237assignment2
             this.xStart = xStart;
             this.yStart = yStart;
 
+            mazeTraversal(maze, xStart, yStart);
             //Do work needed to use mazeTraversal recursive call and solve the maze.
         }
 
@@ -51,9 +56,117 @@ namespace cis237assignment2
         /// Feel free to change the return type if you like, or pass in parameters that you might need.
         /// This is only a very small starting point.
         /// </summary>
-        private void mazeTraversal()
+        private void mazeTraversal(char[,] maze, int xPosition, int yPosition)
         {
-            //Implement maze traversal recursive call
+            deadEndBool = true;
+            if(finishCheck(maze, xPosition, yPosition))
+            {
+                finishBool = true;
+                program.PrintMaze(maze);
+                return;
+            }
+            else
+            {
+                finishBool = false;
+            }
+
+            if(maze[xPosition, yPosition] == '.')
+            {
+                maze[xPosition, yPosition] = 'X';
+            }
+
+            if(finishBool != true)
+            {
+                if(!wallChecker(maze, xPosition + 1, yPosition)) //Check up
+                {
+                    deadEndBool = false;
+                    mazeTraversal(maze, xPosition + 1, yPosition);  
+                }
+
+                if(!wallChecker(maze, xPosition -1, yPosition)) //Check down
+                {
+                    deadEndBool = false;
+                    mazeTraversal(maze, xPosition-1, yPosition);
+                }
+
+                if(!wallChecker(maze, xPosition, yPosition +1)) //Check right
+                {
+                    deadEndBool = false;
+                    mazeTraversal(maze, xPosition, yPosition + 1);
+                }
+
+                if(!wallChecker(maze, xPosition, yPosition -1 )) //Check left
+                {
+                    deadEndBool = false;
+                    mazeTraversal(maze, xPosition, yPosition - 1);
+                }
+
+                if (deadEndBool == true)
+                {
+                    if (returnAStep(maze, xPosition + 1, yPosition))
+                    {
+                        maze[xPosition, yPosition] = '0';
+                        mazeTraversal(maze, xPosition + 1, yPosition);
+                    }
+
+                    if (returnAStep(maze, xPosition - 1, yPosition))
+                    {
+                        maze[xPosition, yPosition] = '0';
+                        mazeTraversal(maze, xPosition - 1, yPosition);
+                    }
+
+                    if (returnAStep(maze, xPosition, yPosition + 1))
+                    {
+                        maze[xPosition, yPosition] = '0';
+                        mazeTraversal(maze, xPosition, yPosition + 1);
+                    }
+
+                    if (returnAStep(maze, xPosition, yPosition - 1))
+                    {
+                        maze[xPosition, yPosition] = '0';
+                        mazeTraversal(maze, xPosition, yPosition - 1);
+                    }
+                }
+            }
+        }
+
+
+        //It checks for walls
+        private bool wallChecker(char [,] maze, int xPosition, int yPosition)
+        {
+            if(maze[xPosition, yPosition] == '#' || maze[xPosition, yPosition] == '0' || maze[xPosition, yPosition] == 'X') //If the passed position isn't a valid move, it's a wall or a previously checked route so we return true. 
+                {
+                    return true;
+                }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Does this look familiar to you? If so return true, if not return false.
+        private bool returnAStep(char[,] maze, int xPosition, int yPosition)
+        {
+            if(maze[xPosition, yPosition] == 'X')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool finishCheck(char[,] maze, int xPosition, int yPosition)
+        {
+            if(maze[xPosition, yPosition] == 'F')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
