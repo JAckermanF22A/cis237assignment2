@@ -41,69 +41,66 @@ namespace cis237assignment2
             { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
             { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
 
-            /*char[,] maze1 =
-            { {'#', '#', '#', '#', '#'},
-            {'#', '.', '.', '.', '#'},
-            {'#', '#', '.', '#', '#'},
-            {'#', '.', '.', '.', 'F'},
-            {'#', '#', '#', '#', '#'} };*/
+            char[,] copyOfMaze1 = (char[,])maze1.Clone(); //A clone of maze1 so everything doesn't break when we try to transpose!
 
             /// <summary>
             /// Create a new instance of a mazeSolver.
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
 
-            //Create the second maze by transposing the first maze
-            char[,] maze2 = transposeMaze(maze1);
+            
 
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
+
+            //Create the second maze by transposing the first maze
+            char[,] maze2 = transposeMaze(copyOfMaze1);
             
 
             //Solve the transposed maze.
-            //mazeSolver.SolveMaze(maze2, X_START, Y_START); //UNCOMMENT OUT TO SOLVE MAZE 2
+            mazeSolver.SolveMaze(maze2, X_START, Y_START); 
 
         }
 
-        /// <summary>
-        /// This method will take in a 2 dimensional char array and return
-        /// a char array maze that is flipped along the diagonal, or in mathematical
-        /// terms, transposed.
-        /// ie. if the array looks like 1, 2, 3
-        ///                             4, 5, 6
-        ///                             7, 8, 9
-        /// The returned result will be:
-        ///                             1, 4, 7
-        ///                             2, 5, 8
-        ///                             3, 6, 9
-        /// The current return statement is just a placeholder so the program
-        /// doesn't complain about no return value.
+
         /// </summary>
         /// <param name="mazeToTranspose"></param>
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-            //Write code her to create a transposed maze.
-            for (int j = 0; j < 8; j++)
-                for (int r = 0; r < 5; r++)
-                    maze2[j, r] = mazeToTranspose[r, j];
-            return new char[1, 1];
+            //A temporary placeholder to hold the transposed array and then get returned.
+            char[,] tempMaze = new char[mazeToTranspose.GetLength(0), mazeToTranspose.GetLength(1)];
+
+            int rowLength = tempMaze.GetLength(0);
+            int colLength = tempMaze.GetLength(1);
+
+            //Goes through row by row transposing the columns.
+            for (int r = 0; r < rowLength; r++)
+            {
+                for (int c = 0; c < colLength; c++)
+                {
+                    tempMaze[r, c] = mazeToTranspose[c, r]; //Transpose the values!
+                }
+            }
+            return tempMaze; //Spit out the newly transposed maze
         }
 
         public void PrintMaze(char[,] maze)
         {
             char[,] solvedMaze;
             solvedMaze = maze;
+
             int rowLength = solvedMaze.GetLength(0);
             int colLength = solvedMaze.GetLength(1);
-
-            for (int i = 0; i < rowLength; i++)
+            
+            //Basically the same thing as the row transposer, except instead of transposing it prints out the maze.
+            for (int r = 0; r < rowLength; r++)
             {
-                for (int j = 0; j < colLength; j++)
+                for (int c = 0; c < colLength; c++)
                 {
-                    Console.Write(string.Format("{0} ", solvedMaze[i, j]));
+                    Console.Write(string.Format("{0} ", solvedMaze[r, c]));
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
             }

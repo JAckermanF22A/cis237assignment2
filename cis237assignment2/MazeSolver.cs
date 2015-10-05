@@ -22,6 +22,7 @@ namespace cis237assignment2
         int yStart;
         bool finishBool;
         bool deadEndBool;
+        bool completionPrint;
 
         Program program = new Program();
 
@@ -45,6 +46,7 @@ namespace cis237assignment2
             this.maze = maze;
             this.xStart = xStart;
             this.yStart = yStart;
+            completionPrint = false;
 
             mazeTraversal(maze, xStart, yStart);
             //Do work needed to use mazeTraversal recursive call and solve the maze.
@@ -61,8 +63,13 @@ namespace cis237assignment2
             deadEndBool = true;
             if(finishCheck(maze, xPosition, yPosition))
             {
-                finishBool = true;
-                program.PrintMaze(maze);
+                if(completionPrint == false)
+                {
+                    finishBool = true;
+                    program.PrintMaze(maze);
+                    completionPrint = true;
+                }
+               
                 return;
             }
             else
