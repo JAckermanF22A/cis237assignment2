@@ -20,9 +20,9 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
-        bool finishBool;
+        bool finishBool; 
         bool deadEndBool;
-        bool completionPrint;
+        bool completionPrint; //This bool will be used for preventing a bug where for some reason somehow the maze gets solved a second time somewhere in the stack.
 
         Program program = new Program();
 
@@ -46,7 +46,7 @@ namespace cis237assignment2
             this.maze = maze;
             this.xStart = xStart;
             this.yStart = yStart;
-            completionPrint = false;
+            completionPrint = false; 
 
             mazeTraversal(maze, xStart, yStart);
             //Do work needed to use mazeTraversal recursive call and solve the maze.
@@ -60,10 +60,10 @@ namespace cis237assignment2
         /// </summary>
         private void mazeTraversal(char[,] maze, int xPosition, int yPosition)
         {
-            deadEndBool = true;
-            if(finishCheck(maze, xPosition, yPosition))
+            deadEndBool = true; //Everytime we enter a new instance of the method we should assume we're at a dead end until proven otherwise
+            if(finishCheck(maze, xPosition, yPosition)) //Goes to check if we have reached the finish marker
             {
-                if(completionPrint == false)
+                if(completionPrint == false) //Checks if a finished maze has already been printed out for this particular runthrough.
                 {
                     finishBool = true;
                     program.PrintMaze(maze);
@@ -77,7 +77,7 @@ namespace cis237assignment2
                 finishBool = false;
             }
 
-            if(maze[xPosition, yPosition] == '.')
+            if(maze[xPosition, yPosition] == '.') //If the position we currently occupy is a ., change it to X for indicating we have been here.
             {
                 maze[xPosition, yPosition] = 'X';
             }
@@ -86,8 +86,8 @@ namespace cis237assignment2
             {
                 if(!wallChecker(maze, xPosition + 1, yPosition)) //Check up
                 {
-                    deadEndBool = false;
-                    mazeTraversal(maze, xPosition + 1, yPosition);  
+                    deadEndBool = false; //If we've found a viable move we're not at a dead end.
+                    mazeTraversal(maze, xPosition + 1, yPosition);  //To move into that empty spot we just found we pass the new coordinate into the function
                 }
 
                 if(!wallChecker(maze, xPosition -1, yPosition)) //Check down
@@ -108,11 +108,11 @@ namespace cis237assignment2
                     mazeTraversal(maze, xPosition, yPosition - 1);
                 }
 
-                if (deadEndBool == true)
+                if (deadEndBool == true) //If we've reached here without having found a move, we're at a dead end and must retrace our steps.
                 {
                     if (returnAStep(maze, xPosition + 1, yPosition))
                     {
-                        maze[xPosition, yPosition] = '0';
+                        maze[xPosition, yPosition] = '0'; //Change the position we occupy to a 0 before we leave, preventing our return.
                         mazeTraversal(maze, xPosition + 1, yPosition);
                     }
 
@@ -138,10 +138,10 @@ namespace cis237assignment2
         }
 
 
-        //It checks for walls
+        //Okay, wallChecker isn't 100% accurate, but wallAndPreviouslySearchedRouteChecker is a bit cumbersome for my tastes.
         private bool wallChecker(char [,] maze, int xPosition, int yPosition)
         {
-            if(maze[xPosition, yPosition] == '#' || maze[xPosition, yPosition] == '0' || maze[xPosition, yPosition] == 'X') //If the passed position isn't a valid move, it's a wall or a previously checked route so we return true. 
+            if(maze[xPosition, yPosition] == '#' || maze[xPosition, yPosition] == '0' || maze[xPosition, yPosition] == 'X')
                 {
                     return true;
                 }
@@ -152,6 +152,7 @@ namespace cis237assignment2
         }
 
         //Does this look familiar to you? If so return true, if not return false.
+        //Basically checks if a spot has been visited before.
         private bool returnAStep(char[,] maze, int xPosition, int yPosition)
         {
             if(maze[xPosition, yPosition] == 'X')
@@ -164,9 +165,10 @@ namespace cis237assignment2
             }
         }
 
+        //Are we there yet? Are we there yet? Are we there yet? Are we there yet?
         private bool finishCheck(char[,] maze, int xPosition, int yPosition)
         {
-            if(maze[xPosition, yPosition] == 'F')
+            if(maze[xPosition, yPosition] == 'F') //Hopefully this is okay, I made it so an F in the array indicates the finish point.
             {
                 return true;
             }

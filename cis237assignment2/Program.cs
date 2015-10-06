@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Jacob Ackerman
+//Fall 2015
+//CIS237
+
+//Sadly there's no victory music for reaching the end.
+
+
 namespace cis237assignment2
 {
     class Program
@@ -53,8 +60,11 @@ namespace cis237assignment2
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
+
+            Console.WriteLine("Original Maze:");
             mazeSolver.SolveMaze(maze1, X_START, Y_START);
 
+            Console.WriteLine("Transposed Maze:");
             //Create the second maze by transposing the first maze
             char[,] maze2 = transposeMaze(copyOfMaze1);
             
@@ -100,10 +110,12 @@ namespace cis237assignment2
             {
                 for (int c = 0; c < colLength; c++)
                 {
-                    Console.Write(string.Format("{0} ", solvedMaze[r, c]));
+                    Console.Write(string.Format("{0} ", solvedMaze[r, c])); 
                 }
-                Console.Write(Environment.NewLine + Environment.NewLine);
+                Console.Write(Environment.NewLine);
             }
+
+            Console.Write(Environment.NewLine + Environment.NewLine);
         }
     }
 }

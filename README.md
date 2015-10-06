@@ -1,12 +1,19 @@
-# Assignment 1 - Review of C# Basic Concepts and Introduction to Git
+﻿# Assignment 2 - Maze Solver
 
 ## Author
+Jacob Ackerman
 
 ## Description
 
-You must write a program to traverse a 12 x 12 maze and find a successful path from a starting point to an exit. You are given a hard coded maze in the program, as well as some starting coordinates. Each spot in the maze is represented by either a '#' or a '.' (dot). The #'s represent the walls of the maze, and the dots represent paths through the maze. Moves can be made only up, down, left, or right (not diagonally), one spot at a time, and only over paths (not into or across a wall). The exit will be any spot that is on the outside of the array. As your program attempts to find a path leading to the exit, it should place the character 'X' in each spot along the path. If a dead end is reached, your program should replace the X’s with '0'. But, the spots with '0' should be marked back to 'X' if these spots are part of a successful path leading to a final state. The output of your program is the maze configuration after each move. In your testing, you may assume that each maze has a path from its starting point to its exit point. If there is no exit, you will arrive at the starting spot again.
+You must write a program to traverse a 12 x 12 maze and find a successful path from a starting point to an exit. You are given a hard coded maze in the program, as well as some starting coordinates. 
+Each spot in the maze is represented by either a '#' or a '.' (dot). The #'s represent the walls of the maze, and the dots represent paths through the maze. 
+Moves can be made only up, down, left, or right (not diagonally), one spot at a time, and only over paths (not into or across a wall). 
+The exit will be any spot that is on the outside of the array. As your program attempts to find a path leading to the exit, it should place the character 'X' in each spot along the path. 
+If a dead end is reached, your program should replace the X’s with '0'. But, the spots with '0' should be marked back to 'X' if these spots are part of a successful path leading to a final state. 
+The output of your program is the maze configuration after each move. In your testing, you may assume that each maze has a path from its starting point to its exit point. 
+If there is no exit, you will arrive at the starting spot again.
 
-There is a method stub in the main program for transposing the 2D array. The progarm is setup to solve both the orignal maze, and the transposed maze. Your program should be able to solve both of them without any issue.
+There is a method stub in the main program for transposing the 2D array. The program is setup to solve both the orignal maze, and the transposed maze. Your program should be able to solve both of them without any issue.
 
 You are required to use recursion to solve this problem.
 
@@ -25,7 +32,10 @@ It might be useful while developing this program to use a smaller sized maze, an
 Don't forget that you must have a base case for your recursive method or you will continue to get a stack overflow. 
 
 ## Outside Resources Used
+http://stackoverflow.com/questions/18368611/how-do-i-transpose-a-multi-dimensional-array
+http://stackoverflow.com/questions/4106369/how-do-i-find-the-size-of-a-2d-array-in-c
 
 ## Known Problems, Issues, And/Or Errors in the Program
-
+Not sure it's really a problem, but the way I coded it I made it so an "F" indicates the finish of the maze. If you're planning on subbing in different mazes you'll need to make the exit point an F. 
+But if not, well obviously no problem.
 
